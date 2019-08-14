@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>PROXY_MELI_AWS</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Core" Version="3.3.103.25" />
+    <PackageReference Include="AWSSDK.SQS" Version="3.3.100.61" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SQS\" />
+  </ItemGroup>
+</Project>

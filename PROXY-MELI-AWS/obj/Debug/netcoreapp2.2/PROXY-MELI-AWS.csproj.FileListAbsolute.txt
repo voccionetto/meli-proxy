@@ -1,0 +1,8 @@
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/bin/Debug/netcoreapp2.2/PROXY-MELI-AWS.deps.json
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/bin/Debug/netcoreapp2.2/PROXY-MELI-AWS.dll
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/bin/Debug/netcoreapp2.2/PROXY-MELI-AWS.pdb
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/obj/Debug/netcoreapp2.2/PROXY-MELI-AWS.csproj.CoreCompileInputs.cache
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/obj/Debug/netcoreapp2.2/PROXY-MELI-AWS.AssemblyInfoInputs.cache
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/obj/Debug/netcoreapp2.2/PROXY-MELI-AWS.AssemblyInfo.cs
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/obj/Debug/netcoreapp2.2/PROXY-MELI-AWS.dll
+/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/obj/Debug/netcoreapp2.2/PROXY-MELI-AWS.pdb
