@@ -16,7 +16,7 @@ namespace PROXY_MELI_AWS.SQS
         public void PostMessage(object msg)
         {
             var queueUrl = "https://sqs.us-east-1.amazonaws.com/541644236698/proxy_meli";
-            var awsCreds = new BasicAWSCredentials("AKIAX4HEDE6NN3KPHNV2", "WT+YiEag/xTe+wN0XQLHmvxpCUCiNEPr3t1V5tmO");
+            var awsCreds = new BasicAWSCredentials("AKIAX4HEDE6NNETKB63J", "QIAzW2bCToNpQI62Xg8emWGz0TLza5NOYNmY0wvV");
             //Create a client to talk to SQS
             var amazonSQSClient = new AmazonSQSClient(awsCreds, Amazon.RegionEndpoint.USEast1);
             //Create the request to send
