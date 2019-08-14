@@ -799,28 +799,30 @@
     ]
   },
   "packageFolders": {
-    "/Users/nettovoccio/.nuget/packages/": {},
-    "/usr/local/share/dotnet/sdk/NuGetFallbackFolder": {}
+    "C:\\Users\\francisco.voccio\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/PROXY-MELI-AWS.csproj",
+      "projectUniqueName": "C:\\Users\\francisco.voccio\\Documents\\Pessoal\\meli-proxy\\PROXY-MELI-AWS\\PROXY-MELI-AWS.csproj",
       "projectName": "PROXY-MELI-AWS",
-      "projectPath": "/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/PROXY-MELI-AWS.csproj",
-      "packagesPath": "/Users/nettovoccio/.nuget/packages/",
-      "outputPath": "/Users/nettovoccio/Desenvolvimento/C#/PROXY-MELI/PROXY-MELI/PROXY-MELI-AWS/obj/",
+      "projectPath": "C:\\Users\\francisco.voccio\\Documents\\Pessoal\\meli-proxy\\PROXY-MELI-AWS\\PROXY-MELI-AWS.csproj",
+      "packagesPath": "C:\\Users\\francisco.voccio\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\francisco.voccio\\Documents\\Pessoal\\meli-proxy\\PROXY-MELI-AWS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "/Users/nettovoccio/.config/NuGet/NuGet.Config"
+        "C:\\Users\\francisco.voccio\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp2.2"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

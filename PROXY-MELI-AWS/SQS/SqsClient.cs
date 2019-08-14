@@ -33,10 +33,10 @@ namespace PROXY_MELI_AWS.SQS
             {
                 foreach (var message in response.Messages)
                 {
-                    var deleteMessageRequest = new DeleteMessageRequest();
-                    deleteMessageRequest.QueueUrl = queueUrl;
-                    deleteMessageRequest.ReceiptHandle = message.ReceiptHandle;
-                    var result = amazonSQSClient.DeleteMessageAsync(deleteMessageRequest).Result;
+                    //var deleteMessageRequest = new DeleteMessageRequest();
+                    //deleteMessageRequest.QueueUrl = queueUrl;s
+                    //deleteMessageRequest.ReceiptHandle = message.ReceiptHandle;
+                    //var result = amazonSQSClient.DeleteMessageAsync(deleteMessageRequest).Result;
                 }
             }
 
