@@ -1,9 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROXY-MELI", "PROXY-MELI\PROXY-MELI.csproj", "{4310C120-22BB-49B1-AE1A-D2EBA0E0D6CD}"
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PROXY-MELI", "PROXY-MELI\PROXY-MELI.csproj", "{4310C120-22BB-49B1-AE1A-D2EBA0E0D6CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PROXY-MELI-AWS", "PROXY-MELI-AWS\PROXY-MELI-AWS.csproj", "{F587D9A9-9811-487F-B299-7A5759275064}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PROXY-MELI-AWS", "PROXY-MELI-AWS\PROXY-MELI-AWS.csproj", "{F587D9A9-9811-487F-B299-7A5759275064}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PROXY-MELI-LAMBDA", "PROXY-MELI-LAMBDA\PROXY-MELI-LAMBDA.csproj", "{0845322E-BA86-4FB9-9504-77A2B9847B76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,5 +22,15 @@ Global
 		{F587D9A9-9811-487F-B299-7A5759275064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F587D9A9-9811-487F-B299-7A5759275064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F587D9A9-9811-487F-B299-7A5759275064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0845322E-BA86-4FB9-9504-77A2B9847B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0845322E-BA86-4FB9-9504-77A2B9847B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0845322E-BA86-4FB9-9504-77A2B9847B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0845322E-BA86-4FB9-9504-77A2B9847B76}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE6D67AB-D6F1-44F2-9310-4E98FE23BD1A}
 	EndGlobalSection
 EndGlobal
