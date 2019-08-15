@@ -7,7 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace PROXY_MELI
 {
+    using System.Net.Http;
     using Amazon.Runtime.SharedInterfaces;
+    using Microsoft.Extensions.Logging;
+    using PROXY_MELI_AWS.SQS;
     using ReverseProxy;
 
     public class Startup
@@ -31,26 +34,37 @@ namespace PROXY_MELI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging().AddSingleton<ILoggerFactory, LoggerFactory>();
+            services.AddOptions();
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+
+            services.Configure<SqsClient>(options =>
+            {
+                options.QueueUrl = Configuration["AWS:SQS_proxy_meli"];
+                options.AccessKey = Configuration["AWS:Access_Key"];
+                options.SecretKey = Configuration["AWS:Secret_Key"];
+            });
+
+            services.AddSingleton<HttpClient>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //loggerFactory.AddLog4Net($"log4net.{env.EnvironmentName}.config");
 
             app.UseMiddleware<ReverseProxyMiddleware>();
 

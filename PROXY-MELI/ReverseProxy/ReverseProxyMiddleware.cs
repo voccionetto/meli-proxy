@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
 using PROXY_MELI_AWS.SQS;
 
 namespace PROXY_MELI.ReverseProxy
@@ -16,11 +17,17 @@ namespace PROXY_MELI.ReverseProxy
     {
         private static readonly HttpClient _httpClient = new HttpClient();
         private readonly RequestDelegate _next;
+        private readonly SqsClient _sqsClient;
         private Stopwatch stopwatch;
 
-        public ReverseProxyMiddleware(RequestDelegate next)
+
+        public string Ip { get; set; }
+        public string Path { get; set; }
+
+        public ReverseProxyMiddleware(RequestDelegate next, IOptions<SqsClient> sqsClient)
         {
             _next = next;
+            _sqsClient = sqsClient.Value;
         }
 
         public async Task Invoke(HttpContext context)
@@ -29,6 +36,10 @@ namespace PROXY_MELI.ReverseProxy
 
             if (targetUri != null)
             {
+                var request = context.Request;
+                Path = $"{request.Path}{request.QueryString}";
+                Ip = !request.IpIsLocal() ? request.GetClientSystemInfo().IpAddress : "";
+
                 stopwatch = new Stopwatch();
                 stopwatch.Start();
                 HttpRequestMessage targetRequestMessage = CreateTargetMessage(context, targetUri);
@@ -55,21 +66,24 @@ namespace PROXY_MELI.ReverseProxy
             await context.Response.Body.WriteAsync(content);
 
             stopwatch.Stop();
-            LogRequest(context);
+            await LogRequest(context);
         }
 
-        private void LogRequest(HttpContext context)
+        private async Task LogRequest(HttpContext context)
         {
             var request = context.Request;
             var response = context.Response;
 
             var requestId = request.Headers.FirstOrDefault(x => x.Key.Equals("Request-Id")).Value.ToString();
-            var status = response.StatusCode;
-            var ip = !request.IpIsLocal()? request.GetClientSystemInfo().IpAddress : "";
-            var time = stopwatch.Elapsed.Milliseconds;
 
-            var sqsClient = new SqsClient();
-            sqsClient.PostMessage(null);
+
+            await _sqsClient.PostMessage(new RequestMELI
+            {
+                TotalTime = stopwatch.Elapsed,
+                Ip = Ip,
+                StatusCode = response.StatusCode,
+                Path = Path
+            });
 
         }
 
@@ -135,8 +149,8 @@ namespace PROXY_MELI.ReverseProxy
             //TODO: pegar de config
             var path = request.Path;
 
-            
-            return !"/".Equals(path.Value) && !path.Value.Contains(".") ? new Uri("https://api.mercadolibre.com" + request.Path): null;
+
+            return !"/".Equals(path.Value) && !path.Value.Contains(".") ? new Uri("https://api.mercadolibre.com" + request.Path) : null;
         }
     }
 }

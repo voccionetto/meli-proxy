@@ -15,14 +15,22 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="AWSSDK.Core" Version="3.3.103.25" />
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.100.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.11" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
     <Folder Include="ReverseProxy\" />
     <Folder Include="Extensions\" />
+    <Folder Include="log4net.Development.config">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Folder>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PROXY-MELI-AWS\PROXY-MELI-AWS.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="log4net.Development.config" />
   </ItemGroup>
 </Project>

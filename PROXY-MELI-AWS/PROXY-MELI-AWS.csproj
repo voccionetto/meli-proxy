@@ -8,8 +8,10 @@
   <ItemGroup>
     <PackageReference Include="AWSSDK.Core" Version="3.3.103.25" />
     <PackageReference Include="AWSSDK.SQS" Version="3.3.100.61" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SQS\" />
+    <Folder Include="MongoDB\" />
   </ItemGroup>
 </Project>

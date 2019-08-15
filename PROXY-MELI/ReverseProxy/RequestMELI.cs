@@ -3,13 +3,9 @@ namespace PROXY_MELI.ReverseProxy
 {
     public class RequestMELI
     {
-        public RequestMELI()
-        {
-
-        }
-
-        public TimeSpan InitialTime { get; set; }
-        public TimeSpan EndTime { get; set; }
-        public bool Success { get; set; }
+        public TimeSpan TotalTime { get; set; }
+        public int StatusCode { get; set; }
+        public string Ip { get; set; }
+        public string Path { get; set; }
     }
 }
