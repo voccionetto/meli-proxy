@@ -4,4 +4,7 @@
 
 /PROXY-MELI/bin/Debug/netcoreapp2.2
 /.vs/PROXY-MELI/v15
-/PROXY-MELI-AWS/bin/Debug/netcoreapp2.2
+/PROXY-MELI/bin
+/PROXY-MELI-AWS/bin
+/PROXY-MELI/obj
+/PROXY-MELI-AWS/obj
