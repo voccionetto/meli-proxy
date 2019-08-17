@@ -8,9 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 namespace PROXY_MELI
 {
     using System.Net.Http;
-    using Amazon.Runtime.SharedInterfaces;
     using Microsoft.Extensions.Logging;
-    using PROXY_MELI_AWS.SQS;
+    using Microsoft.Extensions.Options;
+    using MongoDB.Driver;
+    using PROXY_MELI_DATABASE.Mongo;
     using ReverseProxy;
 
     public class Startup
@@ -43,18 +44,16 @@ namespace PROXY_MELI
             });
 
 
-            services.Configure<SqsClient>(options =>
-            {
-                options.QueueUrl = Configuration["AWS:SQS_proxy_meli"];
-                options.AccessKey = Configuration["AWS:Access_Key"];
-                options.SecretKey = Configuration["AWS:Secret_Key"];
-            });
+            services.Configure<ProxyMeliMongoDatabaseSettings>(
+                Configuration.GetSection(nameof(ProxyMeliMongoDatabaseSettings)));
+
+            services.AddSingleton<IProxyMeliMongoDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<ProxyMeliMongoDatabaseSettings>>().Value);
 
             services.AddSingleton<HttpClient>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

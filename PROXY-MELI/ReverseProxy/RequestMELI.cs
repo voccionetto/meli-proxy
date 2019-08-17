@@ -7,5 +7,6 @@ namespace PROXY_MELI.ReverseProxy
         public int StatusCode { get; set; }
         public string Ip { get; set; }
         public string Path { get; set; }
+        public DateTime Date { get; set; }
     }
 }

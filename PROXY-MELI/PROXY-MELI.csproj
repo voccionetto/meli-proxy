@@ -17,6 +17,7 @@
     <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.100.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="2.2.11" />
+    <PackageReference Include="MongoDB.Driver" Version="2.9.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,9 +29,9 @@
     </Folder>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PROXY-MELI-AWS\PROXY-MELI-AWS.csproj" />
+    <Content Remove="log4net.Development.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="log4net.Development.config" />
+    <ProjectReference Include="..\PROXY-MELI-DATABASE\PROXY-MELI-DATABASE.csproj" />
   </ItemGroup>
 </Project>
