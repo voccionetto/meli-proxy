@@ -50,6 +50,12 @@ namespace PROXY_MELI
             services.AddSingleton<IProxyMeliMongoDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<ProxyMeliMongoDatabaseSettings>>().Value);
 
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = Configuration["RedisSection:RedisConnection"];
+            });
+
             services.AddSingleton<HttpClient>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

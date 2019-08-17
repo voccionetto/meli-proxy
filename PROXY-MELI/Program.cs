@@ -14,12 +14,19 @@ namespace PROXY_MELI
     {
         public static void Main(string[] args)
         {
+            try { 
+
             CreateWebHostBuilder(args).Build().Run();
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUrls("http://*:5000")
+                .UseUrls("http://*:5002")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
             ;
