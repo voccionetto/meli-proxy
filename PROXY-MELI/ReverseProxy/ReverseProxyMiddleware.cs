@@ -82,13 +82,13 @@ namespace PROXY_MELI.ReverseProxy
         private async Task<Rule> GetCacheRuleRedis(string key)
         {
             var _rule = await _redisCache.GetStringAsync(key).ConfigureAwait(false);
-            return JsonConvert.DeserializeObject<Rule>(_rule);
+            return _rule != null ? JsonConvert.DeserializeObject<Rule>(_rule) : null;
         }
 
-        private async Task SetCacheRuleRedis(string key, Rule rule)
+        private async Task SetCacheRuleRedis(Rule rule)
         {
             var _rule = JsonConvert.SerializeObject(rule);
-            await _redisCache.SetStringAsync(key, _rule).ConfigureAwait(false);
+            await _redisCache.SetStringAsync(rule.KeyRuleRedis, _rule).ConfigureAwait(false);
         }
 
         private async Task SetCacheRedis(string ip, string path)
@@ -101,13 +101,13 @@ namespace PROXY_MELI.ReverseProxy
         private async Task IncrementCacheRateLimit(Rule rule, int qtd)
         {
             qtd++;
-            await _redisCache.SetStringAsync(rule.NameRateLimitRedis, qtd.ToString()).ConfigureAwait(false);
+            await _redisCache.SetStringAsync(rule.KeyRateLimitRedis, qtd.ToString()).ConfigureAwait(false);
 
             if (qtd == rule.RateLimit)
             {
                 var ttl = new DistributedCacheEntryOptions();
-                ttl.SetAbsoluteExpiration(TimeSpan.FromMinutes(rule.BlockedTime));
-                await _redisCache.SetStringAsync(rule.NameRateLimitRedis, "-1", ttl).ConfigureAwait(false);
+                ttl.SetAbsoluteExpiration(TimeSpan.FromSeconds(rule.BlockedTime));
+                await _redisCache.SetStringAsync(rule.KeyRateLimitRedis, "-1", ttl).ConfigureAwait(false);
             }
         }
 
@@ -164,7 +164,7 @@ namespace PROXY_MELI.ReverseProxy
             if (rule.RateLimit == 0)
                 return false;
 
-            var rateLimit = await GetCacheRedis(rule.NameRateLimitRedis).ConfigureAwait(false);
+            var rateLimit = await GetCacheRedis(rule.KeyRateLimitRedis).ConfigureAwait(false);
             var qtd = 0;
             if (rateLimit != null)
                 qtd = Int32.Parse(rateLimit);

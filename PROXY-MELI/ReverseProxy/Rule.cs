@@ -13,7 +13,7 @@ namespace PROXY_MELI.ReverseProxy
         public string Name { get; set; }
         public int BlockedTime { get; set; }
 
-        public string RuleNameRedis
+        public string KeyRuleRedis
         {
             get
             {
@@ -27,11 +27,11 @@ namespace PROXY_MELI.ReverseProxy
             }
         }
 
-        public string NameRateLimitRedis
+        public string KeyRateLimitRedis
         {
             get
             {
-                return PrefixRateLimitRedis + RuleNameRedis;
+                return PrefixRateLimitRedis + KeyRuleRedis;
             }
         }
 
