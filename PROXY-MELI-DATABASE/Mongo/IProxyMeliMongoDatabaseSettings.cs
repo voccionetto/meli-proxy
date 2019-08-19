@@ -7,6 +7,6 @@ namespace PROXY_MELI_DATABASE.Mongo
         string ConnectionString { get; set; }
         string DataBaseName { get; set; }
         string RequestsCollectionName { get; set; }
-        string ConfigCollectionName { get; set; }
+        string ErrorsCollectionName { get; set; }
     }
 }

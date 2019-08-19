@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PROXY_MELI.ReverseProxy
+namespace PROXY_MELI_DATABASE.Models
 {
     public class Rule
     {
@@ -18,12 +18,12 @@ namespace PROXY_MELI.ReverseProxy
             get
             {
                 if (!string.IsNullOrEmpty(Ip) && !string.IsNullOrEmpty(Path))
-                    return PrefixNameRedis + Ip + Path;
+                    return PrefixKeyNameRedis + Ip + Path;
 
                 if (!string.IsNullOrEmpty(Ip))
-                    return PrefixNameRedis + Ip;
+                    return PrefixKeyNameRedis + Ip;
 
-                return PrefixNameRedis + Path;
+                return PrefixKeyNameRedis + Path;
             }
         }
 
@@ -31,11 +31,11 @@ namespace PROXY_MELI.ReverseProxy
         {
             get
             {
-                return PrefixRateLimitRedis + KeyRuleRedis;
+                return PrefixKeyRateLimitRedis + KeyRuleRedis;
             }
         }
 
-        public static string PrefixNameRedis
+        public static string PrefixKeyNameRedis
         {
             get
             {
@@ -43,7 +43,7 @@ namespace PROXY_MELI.ReverseProxy
             }
         }
 
-        public static string PrefixRateLimitRedis
+        public static string PrefixKeyRateLimitRedis
         {
             get
             {
