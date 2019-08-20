@@ -97,9 +97,9 @@ namespace Tests
             request.Path.Returns(new PathString(path));
             request.Method.Returns("GET");
             request.Headers.Returns(new HeaderDictionary()
-            {
-                {HeaderNames.UserAgent, "user-agent"}
-            });
+    {
+{HeaderNames.UserAgent, "user-agent"}
+    });
 
             request.HttpContext.Connection.RemoteIpAddress.Returns(IPAddress.Parse("192.168.1.111"));
 
@@ -109,11 +109,11 @@ namespace Tests
 
             var claimsIdentity = Substitute.For<ClaimsIdentity>();
             claimsIdentity
-                .Claims
-                .Returns(new List<Claim>() {
-                    new Claim("cia", IPAddress.Any.ToString()),
-                    new Claim(ClaimTypes.Name, "12930129301")
-                });
+        .Claims
+        .Returns(new List<Claim>() {
+    new Claim("cia", IPAddress.Any.ToString()),
+    new Claim(ClaimTypes.Name, "12930129301")
+        });
             claimsIdentity.IsAuthenticated.Returns(authenticatedUser);
 
             context.User.Returns(new ClaimsPrincipal(claimsIdentity));

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace PROXY_MELI
+namespace PROXY_MELI_WEB
 {
     public class Program
     {
@@ -19,9 +19,6 @@ namespace PROXY_MELI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-        .UseUrls("http://*:5001")
-        .UseIISIntegration()
-        .UseStartup<Startup>()
-            ;
+        .UseStartup<Startup>();
     }
 }

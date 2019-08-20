@@ -30,15 +30,15 @@ namespace System.Linq
             var xForwardedForIpAddress = xForwardForList.FirstOrDefault()?.Split(',')[0];
 
             return string.IsNullOrEmpty(xForwardedForIpAddress)
-                ? ipAddress
-                : xForwardedForIpAddress;
+        ? ipAddress
+        : xForwardedForIpAddress;
         }
 
         public static ClientSystemInfo GetClientSystemInfo(this HttpRequest request)
         {
             return new ClientSystemInfo(
-                request.Headers[HeaderNames.UserAgent],
-                request.GetClientIpAddress());
+        request.Headers[HeaderNames.UserAgent],
+        request.GetClientIpAddress());
         }
 
         public static bool IpIsLocal(this HttpRequest request)

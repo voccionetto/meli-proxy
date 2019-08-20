@@ -67,7 +67,7 @@ namespace PROXY_MELI.ReverseProxy
                     }
 
                     HttpRequestMessage targetRequestMessage = CreateTargetMessage(context,
-                                                                                  targetUri);
+                  targetUri);
 
                     using (var responseMessage = await _httpClient.SendAsync(targetRequestMessage, HttpCompletionOption.ResponseHeadersRead, context.RequestAborted))
                     {
@@ -220,9 +220,9 @@ namespace PROXY_MELI.ReverseProxy
             var requestMethod = context.Request.Method;
 
             if (!HttpMethods.IsGet(requestMethod) &&
-                !HttpMethods.IsHead(requestMethod) &&
-                !HttpMethods.IsDelete(requestMethod) &&
-                !HttpMethods.IsTrace(requestMethod))
+        !HttpMethods.IsHead(requestMethod) &&
+        !HttpMethods.IsDelete(requestMethod) &&
+        !HttpMethods.IsTrace(requestMethod))
             {
                 var streamContent = new StreamContent(context.Request.Body);
                 requestMessage.Content = streamContent;

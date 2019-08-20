@@ -3,8 +3,8 @@
         "windowsAuthentication": false,
         "anonymousAuthentication": true,
         "iisExpress": {
-            "applicationUrl": "http://localhost:14369",
-            "sslPort": 44342
+            "applicationUrl": "http://localhost:32963",
+            "sslPort": 44372
         }
     },
     "profiles": {
@@ -15,13 +15,13 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
         },
-        "PROXY_MELI": {
+        "PROXY_MELI_WEB": {
             "commandName": "Project",
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
-            "applicationUrl": "http://localhost:5001"
+            "applicationUrl": "https://localhost:1234;http://localhost:1235"
         }
     }
 }

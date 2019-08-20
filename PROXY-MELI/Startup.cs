@@ -23,11 +23,11 @@ namespace PROXY_MELI
         public Startup(IHostingEnvironment environment)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true, true)
-                .AddJsonFile($"resources.{environment.EnvironmentName}.json", true, true)
-                .AddEnvironmentVariables();
+        .SetBasePath(environment.ContentRootPath)
+        .AddJsonFile("appsettings.json", true, true)
+        .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true, true)
+        .AddJsonFile($"resources.{environment.EnvironmentName}.json", true, true)
+        .AddEnvironmentVariables();
 
             Configuration = builder.Build();
             Environment = environment;
@@ -45,10 +45,10 @@ namespace PROXY_MELI
 
 
             services.Configure<ProxyMeliMongoDatabaseSettings>(
-                Configuration.GetSection(nameof(ProxyMeliMongoDatabaseSettings)));
+        Configuration.GetSection(nameof(ProxyMeliMongoDatabaseSettings)));
 
             services.AddSingleton<IProxyMeliMongoDatabaseSettings>(sp =>
-                sp.GetRequiredService<IOptions<ProxyMeliMongoDatabaseSettings>>().Value);
+        sp.GetRequiredService<IOptions<ProxyMeliMongoDatabaseSettings>>().Value);
 
 
             services.AddDistributedRedisCache(options =>
