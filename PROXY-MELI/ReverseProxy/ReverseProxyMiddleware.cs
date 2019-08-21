@@ -23,10 +23,6 @@ namespace PROXY_MELI.ReverseProxy
         private readonly IMongoDatabase _database;
         private Stopwatch stopwatch;
 
-
-        public string Ip { get; set; }
-        public string Path { get; set; }
-
         public ReverseProxyMiddleware(RequestDelegate next,
             IOptions<ProxyMeliMongoDatabaseSettings> settings,
             IDistributedCache redisCache,
@@ -56,10 +52,10 @@ namespace PROXY_MELI.ReverseProxy
                     stopwatch.Start();
 
                     var request = context.Request;
-                    Path = $"{request.Path}{request.QueryString}";
-                    Ip = !request.IpIsLocal() ? request.GetClientSystemInfo().IpAddress : "";
+                    var path = string.Concat('/', request.Path.Value.Split('/')[1]);
+                    var ip = !request.IpIsLocal() ? request.GetClientSystemInfo().IpAddress : "";
 
-                    if (!await CanPass(Ip, Path))
+                    if (!await CanPass(ip, path))
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
                         await LogRequest(context);
@@ -142,15 +138,18 @@ namespace PROXY_MELI.ReverseProxy
             stopwatch.Stop();
 
             var response = context.Response;
+            var request = context.Request;
+            var path = request.Path.Value;
+            var ip = !request.IpIsLocal() ? request.GetClientSystemInfo().IpAddress : "";
 
             var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
 
             await requests.InsertOneAsync(new RequestMELI
             {
                 TotalTime = stopwatch.Elapsed,
-                Ip = Ip,
+                Ip = ip,
                 StatusCode = response.StatusCode,
-                Path = Path,
+                Path = path,
                 Date = DateTime.Now
             });
         }
@@ -170,6 +169,7 @@ namespace PROXY_MELI.ReverseProxy
 
         private async Task<bool> CanPass(string ip, string path)
         {
+            path = path.Replace("/", "");
             var ruleIp = await GetCacheRuleRedis(Rule.PrefixKeyNameRedis + ip).ConfigureAwait(false);
             if (ruleIp != null)
                 return await OkRateLimit(ruleIp);

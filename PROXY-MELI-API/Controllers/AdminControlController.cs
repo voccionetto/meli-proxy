@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
+using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_DATABASE.Mongo;
 using StackExchange.Redis;
 
@@ -22,35 +25,43 @@ namespace PROXY_MELI_API.Controllers
         {
         }
 
-        [HttpGet("Rule")]
+        [HttpGet("AllRules")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetRulesAsync()
+        public async Task<IActionResult> GetAllRulesAsync()
         {
             var keys = GetRulesAllKeysRedis();
 
-            return Created("", keys);
+            var responseKeys = new List<Rule>();
+            foreach(var key in keys)
+            {
+                responseKeys.Add(await GetCacheRuleRedis(key).ConfigureAwait(false));
+            }
+
+            return Created("", responseKeys);
         }
 
-
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetAsync(string id)
         {
-            return "value";
+            var _key = await GetCacheRuleRedis(id).ConfigureAwait(false);
+            return Created("", _key);
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult> PostAsync([FromBody] Rule newRule)
         {
+            if (newRule != null)
+            {
+                //var _key = await GetCacheRuleRedis(newRule.KeyRuleRedis).ConfigureAwait(false);
+                await SetCacheRuleRedis(newRule).ConfigureAwait(false);
+            }
+            return Ok(newRule);
         }
 
         // PUT api/values/5
@@ -61,8 +72,12 @@ namespace PROXY_MELI_API.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult> DeleteAsync(string id)
         {
+            await DeleteCacheRuleRedis(id).ConfigureAwait(false);
+            return Ok(id);
         }
     }
 }

@@ -10,7 +10,6 @@ namespace PROXY_MELI_DATABASE.Models
         public string Ip { get; set; }
         public string Path { get; set; }
         public int RateLimit { get; set; }
-        public string Name { get; set; }
         public int BlockedTime { get; set; }
 
         public string KeyRuleRedis
@@ -39,7 +38,7 @@ namespace PROXY_MELI_DATABASE.Models
         {
             get
             {
-                return "#rule_";
+                return "@rule_";
             }
         }
 
@@ -47,7 +46,7 @@ namespace PROXY_MELI_DATABASE.Models
         {
             get
             {
-                return "#rateLimit_";
+                return "@rateLimit_";
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using PROXY_MELI_API.Models;
 using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_DATABASE.Mongo;
 using StackExchange.Redis;
@@ -25,49 +27,101 @@ namespace PROXY_MELI_API.Controllers
         {
         }
 
-        [HttpGet("Hit")]
+        private CreatedResult CreateResult(IList<RequestMELI> requests)
+        {
+            return Created("", requests.Select(h => new HitResponse
+            {
+                TotalTime = h.TotalTime,
+                StatusCode = h.StatusCode,
+                Ip = h.Ip,
+                Path = h.Path,
+                Date = h.Date
+            }));
+        }
+
+        [HttpGet("AllHits")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetHitsAsync()
+        public async Task<IActionResult> GetAllHitsAsync(DateTime? date = null)
         {
             var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
-            var hits = await requests.Find(_ => true).ToListAsync();
+            var _date = DateTime.Now;
+            if (date != null)
+                _date = date.Value;
 
-            //var x = requests.AsQueryable();
-            return Created("", hits);
+            var _min = _date.TimeMin();
+            var _max = _date.TimeMax();
+
+            var hits = await requests.Find(r=> r.Date >= _min && r.Date <= _max).ToListAsync();
+            return CreateResult(hits);
         }
 
-
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [HttpGet("OKHits")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetOKHitsAsync(DateTime? date = null)
         {
-            return new string[] { "value1", "value2" };
+            var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
+            var _date = DateTime.Now;
+            if (date != null)
+                _date = date.Value;
+
+            var _min = _date.TimeMin();
+            var _max = _date.TimeMax();
+
+            var hits = await requests.Find(r=> r.Date >= _min && r.Date <= _max && r.StatusCode == 200).ToListAsync();
+            return CreateResult(hits);
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        [HttpGet("TooManyRequestsHits")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetTooManyRequestsHitsAsync(DateTime? date = null)
         {
-            return "value";
+            var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
+            var _date = DateTime.Now;
+            if (date != null)
+                _date = date.Value;
+
+            var _min = _date.TimeMin();
+            var _max = _date.TimeMax();
+
+            var hits = await requests.Find(r => r.Date >= _min && r.Date <= _max && r.StatusCode == 429).ToListAsync();
+            return CreateResult(hits);
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpGet("NotFoundRequestsHits")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetNotFoundRequestsHitsAsync(DateTime? date = null)
         {
+            var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
+            var _date = DateTime.Now;
+            if (date != null)
+                _date = date.Value;
+
+            var _min = _date.TimeMin();
+            var _max = _date.TimeMax();
+
+            var hits = await requests.Find(r => r.Date >= _min && r.Date <= _max && r.StatusCode == 404).ToListAsync();
+            return CreateResult(hits);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("ErrorsRequestsHits")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetErrorsRequestsHitsAsync(DateTime? date = null)
         {
-        }
+            var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
+            var _date = DateTime.Now;
+            if (date != null)
+                _date = date.Value;
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            var _min = _date.TimeMin();
+            var _max = _date.TimeMax();
+
+            var hits = await requests.Find(r => r.Date >= _min && r.Date <= _max && r.StatusCode == 500).ToListAsync();
+            return CreateResult(hits);
         }
     }
 }

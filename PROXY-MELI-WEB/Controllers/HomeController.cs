@@ -48,6 +48,21 @@ namespace PROXY_MELI_WEB.Controllers
             return itens;
         }
 
+        public JsonResult GetItensChart(DateTime date, GraphTypes type)
+        {
+            var requests = GetRequests().OrderBy(g => g.Date).GroupBy(g => g.Date.Hour).Select(g=> g.ToList().Count());
+            var title = "";
+            var subTitle = "";
+
+            return Json(
+                new
+                {
+                    response = requests,
+                    title,
+                    subTitle
+                });
+        }
+
         public JsonResult GetItens(DateTime date, GraphTypes type)
         {
             IList<DataPoint> itens = new List<DataPoint>();
