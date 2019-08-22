@@ -3,9 +3,11 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
+using MongoDB.Driver;
 using NSubstitute;
 using NUnit.Framework;
 using PROXY_MELI.ReverseProxy;
+using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_DATABASE.Mongo;
 using PROXYMELITEST.Util;
 using System;
@@ -43,6 +45,46 @@ namespace Tests
                 ErrorsCollectionName = "errors"
             });
         }
+
+        [Test]
+        public async Task CreateItensTests()
+        {
+            var mongo = _proxyMeliMongoDatabaseSettings.Value;
+
+            var clientMongo = new MongoClient(mongo.ConnectionString);
+            var _database = clientMongo.GetDatabase(mongo.DataBaseName);
+
+            var requests = _database.GetCollection<RequestMELI>(mongo.RequestsCollectionName);
+
+            var date = DateTime.Now.TimeMin();
+            var random = new Random();
+            for (var i=0; i< 5000; i++)
+            {
+                var hour = random.Next(0, 24);
+                var time = random.Next(10, 200);
+                var randomStatudCode = random.Next();
+                var statusCode = 200;
+
+                if (randomStatudCode % 3 == 0)
+                    statusCode = 429;
+
+                if (randomStatudCode % 7 == 0)
+                    statusCode = 500;
+
+                if (randomStatudCode % 11 == 0)
+                    statusCode = 404;
+
+                await requests.InsertOneAsync(new RequestMELI
+                {
+                    TotalTime = new TimeSpan(time),
+                    Ip = "192.168.0.1",
+                    StatusCode = statusCode,
+                    Path = "/teste",
+                    Date = date.AddHours(hour)
+                });
+            }
+        }
+
 
         [Test]
         public async Task Should_ReturnOk_When_Initialize()

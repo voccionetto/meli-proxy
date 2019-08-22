@@ -10,113 +10,105 @@ using Newtonsoft.Json;
 using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_WEB.Models;
 using System.Net;
+using Microsoft.Extensions.Options;
 
 namespace PROXY_MELI_WEB.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
+
+        public HomeController(IOptions<ApiCaller> api)
+            : base(api)
+        {
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
-        private IList<RequestMELI> GetRequests()
+        private IEnumerable<int> OrderHits(IList<HitResponse> hits)
         {
-            var requests = new List<RequestMELI>();
-            var random = new Random();
-            for (var i = 0; i < 1000; i++)
-            {
-                var aleatorio = random.Next();
-                requests.Add(new RequestMELI
-                {
-                    TotalTime = new TimeSpan(random.Next()),
-                    StatusCode = aleatorio % 2 == 0 ? 200 : 429,
-                    Path = "/teste",
-                    Date = new DateTime(2019, 8, 19, random.Next(0, 24), 0, 0)
-                });
-            }
-            return requests;
+            return hits.OrderBy(g => g.Date).GroupBy(g => g.Date.Hour).Select(g => g.ToList().Count());
         }
 
-        private IList<DataPoint> GetJsonItens(IEnumerable<IGrouping<int, RequestMELI>> requests)
+        private IEnumerable<double> CalculateAverageTime(IList<HitResponse> hits)
         {
-            var itens = new List<DataPoint>();
-            foreach (var r in requests)
+            var responses = new List<double>();
+            var hitsOrdered = hits.OrderBy(g => g.Date).GroupBy(g => g.Date.Hour);
+            foreach(var hit in hitsOrdered)
             {
-                itens.Add(new DataPoint(r.Key, r.ToList().Count()));
+                var list = hit.ToList().Select(h => h.TotalTime.TotalMilliseconds);
+                var average = list.Average();
+                responses.Add(average);
             }
-            return itens;
+
+            return responses;
         }
 
         public JsonResult GetItensChart(DateTime date, GraphTypes type)
         {
-            var requests = GetRequests().OrderBy(g => g.Date).GroupBy(g => g.Date.Hour).Select(g=> g.ToList().Count());
+            object itens = new List<int>();
             var title = "";
-            var subTitle = "";
-
-            return Json(
-                new
-                {
-                    response = requests,
-                    title,
-                    subTitle
-                });
-        }
-
-        public JsonResult GetItens(DateTime date, GraphTypes type)
-        {
-            IList<DataPoint> itens = new List<DataPoint>();
-            var title = "";
-            var subTitle = "";
-
+            var yAxesTitle = "Hit";
+            var color = "#4169E1";
             try
             {
                 switch (type)
                 {
                     case GraphTypes.TotalHits:
                         title = "Total Hits";
-                        itens = GetJsonItens(GetRequests().OrderBy(g => g.Date).GroupBy(g => g.Date.Hour));
+                        var allHits = CallGet<IList<HitResponse>>("statistics/AllHits");
+                        itens = OrderHits(allHits);
                         break;
                     case GraphTypes.StatusOK:
                         title = "Status 200";
-                        itens = GetJsonItens(GetRequests().Where(g => g.StatusCode == (int)HttpStatusCode.OK).OrderBy(g => g.Date).GroupBy(g => g.Date.Hour));
+                        var hitsOK = CallGet<IList<HitResponse>>("statistics/OKHits");
+                        itens = OrderHits(hitsOK);
                         break;
                     case GraphTypes.TooManyRequests:
                         title = "Status 429";
-                        itens = GetJsonItens(GetRequests().Where(g => g.StatusCode == (int)HttpStatusCode.TooManyRequests).OrderBy(g => g.Date).GroupBy(g => g.Date.Hour));
+                        color = "#008000";
+                        var hitsTooManyRequests = CallGet<IList<HitResponse>>("statistics/TooManyRequestsHits");
+                        itens = OrderHits(hitsTooManyRequests);
                         break;
                     case GraphTypes.NotFound:
                         title = "Status 404";
-                        itens = GetJsonItens(GetRequests().Where(g => g.StatusCode == (int)HttpStatusCode.NotFound).OrderBy(g => g.Date).GroupBy(g => g.Date.Hour));
+                        color = "#FF0000";
+                        var hitsNotFound = CallGet<IList<HitResponse>>("statistics/NotFoundRequestsHits");
+                        itens = OrderHits(hitsNotFound);
                         break;
                     case GraphTypes.Errors:
                         title = "Status 500";
-                        itens = GetJsonItens(GetRequests().Where(g => g.StatusCode == (int)HttpStatusCode.InternalServerError).OrderBy(g => g.Date).GroupBy(g => g.Date.Hour));
+                        color = "#FF0000";
+                        var hitsErrors = CallGet<IList<HitResponse>>("statistics/ErrorsRequestsHits");
+                        itens = OrderHits(hitsErrors);
                         break;
                     case GraphTypes.AverageTime:
                         title = "Average Time";
-                        //itens = GetJsonItens(GetRequests().Where(g => g.StatusCode == (int)HttpStatusCode.InternalServerError).OrderBy(g => g.Date).GroupBy(g => g.Date.Hour));
+                        yAxesTitle = "milliseconds";
+                        var hitsAverage = CallGet<IList<HitResponse>>("statistics/AllHits");
+                        itens = CalculateAverageTime(hitsAverage);
                         break;
                     default:
-                        title = "Page Setup Error";
-                        subTitle = "Contact us -> voccio@gmail.com    ;)";
+                        title = "Page Setup Error <br> Contact us -> voccio@gmail.com    ;)";
                         break;
                 }
             }
 
             catch (Exception ex)
             {
-                title = ex.Message;
-                subTitle = "Ops... Error trying to load page";
+                title = "Ops... Error trying to load page <br>" + ex.Message;
             }
 
             return Json(
-        new
-        {
-            response = itens,
-            title,
-            subTitle
-        });
+            new
+            {
+                response = itens,
+                title,
+                yAxesTitle,
+                color
+            });
         }
     }
 }

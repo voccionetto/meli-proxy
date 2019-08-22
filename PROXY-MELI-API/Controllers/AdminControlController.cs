@@ -58,7 +58,6 @@ namespace PROXY_MELI_API.Controllers
         {
             if (newRule != null)
             {
-                //var _key = await GetCacheRuleRedis(newRule.KeyRuleRedis).ConfigureAwait(false);
                 await SetCacheRuleRedis(newRule).ConfigureAwait(false);
             }
             return Ok(newRule);
@@ -66,8 +65,13 @@ namespace PROXY_MELI_API.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<ActionResult> PutAsync(string id, [FromBody] Rule newRule)
         {
+            if (newRule != null && !string.IsNullOrEmpty(id)  && await GetCacheRuleRedis(id).ConfigureAwait(false) != null)
+            {
+                await SetCacheRuleRedis(newRule).ConfigureAwait(false);
+            }
+            return Ok(newRule);
         }
 
         // DELETE api/values/5

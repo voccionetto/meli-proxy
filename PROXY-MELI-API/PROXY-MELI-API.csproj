@@ -20,7 +20,4 @@
   <ItemGroup>
     <ProjectReference Include="..\PROXY-MELI-DATABASE\PROXY-MELI-DATABASE.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
 </Project>

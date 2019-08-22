@@ -1,5 +1,5 @@
 ﻿using System;
-namespace PROXY_MELI_API.Models
+namespace PROXY_MELI_DATABASE.Models
 {
     public class HitResponse
     {

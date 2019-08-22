@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using PROXY_MELI_API.Models;
 using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_DATABASE.Mongo;
 using StackExchange.Redis;
