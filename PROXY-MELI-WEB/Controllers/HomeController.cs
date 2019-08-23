@@ -36,7 +36,7 @@ namespace PROXY_MELI_WEB.Controllers
         {
             var responses = new List<double>();
             var hitsOrdered = hits.OrderBy(g => g.Date).GroupBy(g => g.Date.Hour);
-            foreach(var hit in hitsOrdered)
+            foreach (var hit in hitsOrdered)
             {
                 var list = hit.ToList().Select(h => h.TotalTime.TotalMilliseconds);
                 var average = list.Average();
@@ -45,6 +45,22 @@ namespace PROXY_MELI_WEB.Controllers
 
             return responses;
         }
+
+        public JsonResult GetHits(DateTime date)
+        {
+            var hits = new List<HitResponse>();
+            try
+            {
+                var allHits = CallGet<IList<HitResponse>>("statistics/AllHits");
+                hits = allHits.OrderBy(h => h.Ip).ThenBy(h=> h.Path).ToList();
+            }
+            catch(Exception ex)
+            {
+                //TODO: logar
+            }
+            return Json(hits);
+        }
+
 
         public JsonResult GetItensChart(DateTime date, GraphTypes type)
         {

@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model PROXY_MELI_DATABASE.Models.Rule
+
+<style>
+    .hidden {
+        display: none;
+        visibility: hidden;
+    }
+</style>
+
+<h1 class="display-4"> Admin</h1>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="container">
+            <table id="table" class="table table-striped table-bordered table-sm" cellspacing="0" width="350">
+                <thead>
+                    <tr>
+                        <th data-field="ip"> IP</th>
+                        <th data-field="path"> Path</th>
+                        <th data-field="rateLimit"> Rate Limit</th>
+                        <th data-field="blockedTime"> Blocked Time</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <form asp-controller="Admin" asp-action="SaveUpdateKey" id="formKey" autocomplete="off"
+              data-ajax-success="onSuccessSaveUpdateKey"
+              data-ajax="true" data-ajax-method="POST" >
+            <input type="hidden" id="keyRuleRedis">
+            <div class="form-group">
+                <label for="ipInput">IP</label>
+                <input type="text" class="form-control ip" asp-for="Ip" placeholder="Enter IP">
+            </div>
+            <div class="form-group">
+                <label for="pathInput">Path</label>
+                <input type="text" class="form-control path" asp-for="Path" placeholder="Enter Path">
+            </div>
+            <div class="form-group">
+                <label for="RateLimitInput">Rate Limit</label>
+                <input type="text" class="form-control rateLimit"  asp-for="RateLimit" placeholder="Enter number Rate Limit">
+            </div>
+            <div class="form-group">
+                <label for="BlockedTimeInput">Blocked Time</label>
+                <input type="text" class="form-control blockedTime"  asp-for="BlockedTime" placeholder="Enter number Blocked Time">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">$(document).ready(function () {
+        loadTable();
+    });
+
+    function onSuccessSaveUpdateKey(obj) {
+        location.reload();
+    }
+
+    function loadTable() {
+        $.get("/Admin/GetRules").done(function (data) {
+            $('#table').bootstrapTable({
+                data: data,
+                pagination: true,
+                search: true,
+                onClickRow: function (row, $element) {
+                    var key = row.keyRuleRedis
+                    $.get("/Admin/GetRule", { id: key }).done(function (data) {
+                        $('.ip').val(data.ip);
+                        $('.path').val(data.path);
+                        $('.rateLimit').val(data.rateLimit);
+                        $('.blockedTime').val(data.blockedTime);
+                    });
+                }
+            });
+        });
+    }</script>

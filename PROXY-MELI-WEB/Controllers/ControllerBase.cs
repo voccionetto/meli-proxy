@@ -39,5 +39,19 @@ namespace PROXY_MELI_WEB.Controllers
             }
         }
 
+        protected HttpResponseMessage CallPost(string path, object data)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                var parametros = JsonConvert.SerializeObject(data);
+                var content = new StringContent(parametros, System.Text.Encoding.UTF8, "application/json");
+
+                var url = _api.ApiPath + path;
+
+                var result = httpClient.PostAsync(url, content).Result;
+                return result;
+            }
+        }
+
     }
 }
