@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PROXY_MELI_DATABASE.Mongo;
 using StackExchange.Redis;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace PROXY_MELI_API
 {
@@ -37,6 +38,9 @@ namespace PROXY_MELI_API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging().AddSingleton<ILoggerFactory, LoggerFactory>();
+            services.AddOptions();
+
             services.Configure<ProxyMeliMongoDatabaseSettings>(
         Configuration.GetSection(nameof(ProxyMeliMongoDatabaseSettings)));
 
@@ -51,11 +55,15 @@ namespace PROXY_MELI_API
                 options.Configuration = Configuration["RedisSection:RedisConnection"];
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Proxy Meli - Control", Version = "v1" });
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -66,6 +74,16 @@ namespace PROXY_MELI_API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            loggerFactory.AddLog4Net($"log4net.{env.EnvironmentName}.config");
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Proxy Meli V1");
+                //c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();

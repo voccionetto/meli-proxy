@@ -1,0 +1,216 @@
+DEBUG 10:35:17.829 PM Rule insert/update @rule_categories_new!
+DEBUG 10:35:37.335 PM Listing Rules 2
+DEBUG 10:35:47.931 PM Listing Rules 2
+DEBUG 10:36:26.085 PM Listing Rules 1
+DEBUG 10:37:46.625 PM Listing Rules 1
+DEBUG 10:37:59.861 PM Listing Rules 1
+DEBUG 10:38:06.613 PM Rule insert/update @rule_categories_new!
+DEBUG 10:38:22.350 PM Listing Rules 2
+DEBUG 10:38:28.146 PM Rule @rule_categories_new deleted!
+DEBUG 10:38:33.706 PM Listing Rules 1
+DEBUG 10:39:21.722 PM Listing hits with errors 0
+DEBUG 10:39:21.722 PM Listing hits too Many Requestes 2
+DEBUG 10:39:21.722 PM Listing hits OK 17
+DEBUG 10:39:21.722 PM Listing hits 22
+DEBUG 10:39:21.890 PM Listing hits 22
+DEBUG 10:39:21.899 PM Listing hits with error not found 0
+DEBUG 10:39:22.559 PM Listing hits 22
+DEBUG 10:39:55.783 PM Listing Rules 1
+DEBUG 10:39:58.897 PM Get Rule @rule_categories
+DEBUG 10:40:05.887 PM Rule insert/update @rule_categories_new!
+DEBUG 10:40:08.342 PM Listing Rules 2
+DEBUG 10:40:08.736 PM Listing Rules 2
+DEBUG 10:40:10.136 PM Get Rule @rule_categories_new
+DEBUG 10:40:17.873 PM Rule insert/update @rule_categories_new!
+DEBUG 10:40:18.099 PM Listing Rules 2
+DEBUG 10:40:22.807 PM Get Rule @rule_categories_new
+DEBUG 10:40:31.183 PM Rule insert/update @rule_192.168.1.110categories_new!
+DEBUG 10:40:31.451 PM Listing Rules 3
+DEBUG 10:40:41.324 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 10:40:46.761 PM Rule insert/update @rule_192.168.1.110categories_new!
+DEBUG 10:40:47.026 PM Listing Rules 3
+DEBUG 10:40:55.774 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 10:41:00.806 PM Rule insert/update @rule_categories_new!
+DEBUG 10:41:01.081 PM Listing Rules 3
+DEBUG 10:41:04.126 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 10:41:06.255 PM Listing Rules 3
+DEBUG 10:41:07.476 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 10:41:47.517 PM Listing hits 22
+DEBUG 10:41:47.688 PM Listing hits too Many Requestes 2
+DEBUG 10:41:47.866 PM Listing hits with error not found 0
+DEBUG 10:41:48.037 PM Listing hits OK 17
+DEBUG 10:41:48.075 PM Listing hits with errors 0
+DEBUG 10:41:48.088 PM Listing hits 22
+DEBUG 10:41:48.106 PM Listing hits 22
+DEBUG 10:42:56.197 PM Listing Rules 3
+DEBUG 10:43:46.245 PM Listing Rules 3
+DEBUG 10:47:19.099 PM Listing Rules 3
+DEBUG 10:47:22.677 PM Get Rule @rule_categories
+DEBUG 10:53:30.939 PM Listing hits OK 17
+DEBUG 10:53:30.939 PM Listing hits with error not found 0
+DEBUG 10:53:30.939 PM Listing hits with errors 0
+DEBUG 10:53:30.939 PM Listing hits 22
+DEBUG 10:53:30.984 PM Listing hits too Many Requestes 2
+DEBUG 10:53:30.987 PM Listing hits 22
+DEBUG 10:53:31.876 PM Listing hits 22
+DEBUG 10:53:35.735 PM Listing Rules 3
+DEBUG 10:54:01.189 PM Listing Rules 3
+DEBUG 10:55:26.465 PM Get Rule @rule_categories
+DEBUG 10:55:39.653 PM Listing Rules 3
+DEBUG 10:57:06.134 PM Listing Rules 3
+DEBUG 10:57:10.579 PM Listing Rules 3
+DEBUG 10:57:20.673 PM Listing Rules 3
+DEBUG 10:57:23.103 PM Listing Rules 3
+DEBUG 10:57:26.840 PM Listing Rules 3
+DEBUG 10:57:37.816 PM Listing Rules 3
+DEBUG 10:58:00.499 PM Listing Rules 3
+DEBUG 10:58:12.441 PM Listing Rules 3
+DEBUG 10:58:34.941 PM Listing Rules 3
+DEBUG 10:58:42.427 PM Listing Rules 3
+DEBUG 10:59:00.926 PM Listing Rules 3
+DEBUG 11:03:59.173 PM Get Rule @rule_categories
+DEBUG 11:05:23.046 PM Listing Rules 3
+DEBUG 11:05:31.723 PM Listing Rules 3
+DEBUG 11:06:23.592 PM Listing Rules 3
+DEBUG 11:10:19.677 PM Listing Rules 3
+DEBUG 11:13:34.247 PM Listing Rules 3
+DEBUG 11:13:35.692 PM Get Rule @rule_categories
+DEBUG 11:13:36.795 PM Get Rule @rule_categories
+DEBUG 11:13:37.235 PM Get Rule @rule_categories
+DEBUG 11:13:37.375 PM Get Rule @rule_categories
+DEBUG 11:13:42.949 PM Get Rule @rule_categories
+DEBUG 11:13:43.323 PM Get Rule @rule_categories
+DEBUG 11:13:43.752 PM Get Rule @rule_categories
+DEBUG 11:13:46.032 PM Get Rule @rule_categories
+DEBUG 11:13:47.803 PM Get Rule @rule_categories
+DEBUG 11:13:55.045 PM Listing Rules 3
+DEBUG 11:13:56.415 PM Get Rule @rule_categories
+DEBUG 11:14:54.745 PM Listing Rules 3
+DEBUG 11:14:57.902 PM Listing Rules 3
+DEBUG 11:14:59.179 PM Get Rule @rule_categories
+DEBUG 11:15:00.153 PM Get Rule @rule_categories
+DEBUG 11:15:00.709 PM Get Rule @rule_categories
+DEBUG 11:15:01.051 PM Get Rule @rule_categories
+DEBUG 11:15:02.021 PM Get Rule @rule_categories
+DEBUG 11:15:13.677 PM Listing Rules 3
+DEBUG 11:15:44.639 PM Listing Rules 3
+DEBUG 11:15:50.848 PM Get Rule @rule_categories_new
+DEBUG 11:15:54.461 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:16:06.691 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:16:10.731 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:16:42.077 PM Get Rule @rule_categories
+DEBUG 11:17:25.485 PM Listing Rules 3
+DEBUG 11:17:27.294 PM Get Rule @rule_categories
+DEBUG 11:17:28.477 PM Get Rule @rule_categories
+DEBUG 11:17:28.906 PM Get Rule @rule_categories
+DEBUG 11:17:44.785 PM Listing Rules 3
+DEBUG 11:17:45.883 PM Get Rule @rule_categories
+DEBUG 11:17:47.166 PM Get Rule @rule_categories
+DEBUG 11:17:47.691 PM Get Rule @rule_categories
+DEBUG 11:17:47.864 PM Get Rule @rule_categories
+DEBUG 11:17:48.035 PM Get Rule @rule_categories
+DEBUG 11:17:48.248 PM Get Rule @rule_categories
+DEBUG 11:17:48.625 PM Get Rule @rule_categories
+DEBUG 11:17:48.845 PM Get Rule @rule_categories
+DEBUG 11:17:49.013 PM Get Rule @rule_categories
+DEBUG 11:17:49.265 PM Get Rule @rule_categories
+DEBUG 11:17:51.098 PM Get Rule @rule_categories
+DEBUG 11:17:51.786 PM Get Rule @rule_categories
+DEBUG 11:17:52.212 PM Get Rule @rule_categories
+DEBUG 11:18:16.765 PM Listing Rules 3
+DEBUG 11:18:18.222 PM Get Rule @rule_categories
+DEBUG 11:18:22.232 PM Get Rule @rule_categories
+DEBUG 11:18:22.657 PM Get Rule @rule_categories
+DEBUG 11:18:23.394 PM Get Rule @rule_categories
+DEBUG 11:18:26.052 PM Get Rule @rule_categories
+DEBUG 11:18:26.239 PM Get Rule @rule_categories
+DEBUG 11:18:27.499 PM Get Rule @rule_categories
+DEBUG 11:20:33.183 PM Listing Rules 3
+DEBUG 11:20:34.658 PM Get Rule @rule_categories
+DEBUG 11:20:35.280 PM Get Rule @rule_categories
+DEBUG 11:20:35.463 PM Get Rule @rule_categories
+DEBUG 11:20:35.546 PM Get Rule @rule_categories
+DEBUG 11:20:37.005 PM Get Rule @rule_categories
+DEBUG 11:21:35.158 PM Listing Rules 3
+DEBUG 11:21:37.082 PM Get Rule @rule_categories
+DEBUG 11:21:38.702 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:21:39.253 PM Get Rule @rule_categories
+DEBUG 11:21:43.253 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:21:43.917 PM Get Rule @rule_categories
+DEBUG 11:21:45.136 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:21:45.833 PM Get Rule @rule_categories_new
+DEBUG 11:21:46.769 PM Get Rule @rule_categories
+DEBUG 11:23:52.033 PM Listing Rules 3
+DEBUG 11:23:53.504 PM Get Rule @rule_categories
+DEBUG 11:23:54.184 PM Get Rule @rule_categories
+DEBUG 11:23:54.363 PM Get Rule @rule_categories
+DEBUG 11:23:54.636 PM Get Rule @rule_categories
+DEBUG 11:23:54.807 PM Get Rule @rule_categories
+DEBUG 11:23:55.457 PM Get Rule @rule_categories
+DEBUG 11:23:55.656 PM Get Rule @rule_categories
+DEBUG 11:23:56.102 PM Get Rule @rule_categories
+DEBUG 11:24:41.941 PM Listing Rules 3
+DEBUG 11:24:44.312 PM Get Rule @rule_categories
+DEBUG 11:25:11.216 PM Listing Rules 3
+DEBUG 11:25:19.009 PM Get Rule @rule_categories_new
+DEBUG 11:25:58.802 PM Listing Rules 3
+DEBUG 11:26:00.368 PM Get Rule @rule_categories
+DEBUG 11:26:06.977 PM Get Rule @rule_categories
+DEBUG 11:30:13.363 PM Listing Rules 3
+DEBUG 11:30:19.308 PM Get Rule @rule_categories
+DEBUG 11:31:21.538 PM Listing Rules 3
+DEBUG 11:31:27.246 PM Get Rule @rule_categories
+DEBUG 11:31:33.561 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:31:37.714 PM Get Rule @rule_categories_new
+DEBUG 11:31:40.999 PM Get Rule @rule_categories_new
+DEBUG 11:31:45.692 PM Get Rule @rule_192.168.1.110categories_new
+DEBUG 11:41:16.076 PM Listing Rules 3
+DEBUG 11:41:23.515 PM Listing Rules 3
+DEBUG 11:41:26.951 PM Get Rule @rule_categories_new
+DEBUG 11:41:43.003 PM Rule @rule_categories_new deleted!
+DEBUG 11:41:52.681 PM Listing Rules 2
+DEBUG 11:43:37.704 PM Listing hits 22
+DEBUG 11:43:38.143 PM Listing hits too Many Requestes 2
+DEBUG 11:43:38.207 PM Listing hits OK 17
+DEBUG 11:43:38.396 PM Listing hits 22
+DEBUG 11:43:38.420 PM Listing hits with errors 0
+DEBUG 11:43:38.542 PM Listing hits with error not found 0
+DEBUG 11:43:38.738 PM Listing hits 22
+DEBUG 11:43:38.908 PM Listing Rules 2
+DEBUG 11:43:59.016 PM Rule insert/update @rule_127.0.0.1/content!
+DEBUG 11:43:59.379 PM Listing Rules 3
+DEBUG 11:45:50.218 PM Listing hits 22
+DEBUG 11:45:50.217 PM Listing hits too Many Requestes 2
+DEBUG 11:45:50.233 PM Listing hits 22
+DEBUG 11:45:50.240 PM Listing hits OK 17
+DEBUG 11:45:50.405 PM Listing hits with errors 0
+DEBUG 11:45:50.418 PM Listing hits with error not found 0
+DEBUG 11:45:51.109 PM Listing hits 22
+DEBUG 11:45:56.808 PM Listing Rules 3
+DEBUG 11:46:08.659 PM Listing Rules 3
+DEBUG 11:46:34.694 PM Listing Rules 3
+DEBUG 11:46:34.919 PM Listing Rules 3
+DEBUG 11:47:00.516 PM Listing Rules 3
+DEBUG 11:47:04.627 PM Get Rule @rule_categories
+DEBUG 11:47:25.771 PM Rule @rule_categories deleted!
+DEBUG 11:47:33.644 PM Listing Rules 2
+DEBUG 11:48:14.793 PM Rule insert/update @rule_categories!
+DEBUG 11:48:35.586 PM Listing Rules 1
+DEBUG 11:48:52.917 PM Rule insert/update @rule_test!
+DEBUG 11:48:53.291 PM Listing Rules 2
+DEBUG 11:49:11.412 PM Get Rule @rule_test
+DEBUG 11:49:20.549 PM Rule @rule_test deleted!
+DEBUG 11:49:21.094 PM Listing Rules 1
+DEBUG 11:52:24.086 PM Listing hits too Many Requestes 2
+DEBUG 11:52:24.086 PM Listing hits with errors 0
+DEBUG 11:52:24.086 PM Listing hits with error not found 0
+DEBUG 11:52:24.086 PM Listing hits 22
+DEBUG 11:52:24.086 PM Listing hits 22
+DEBUG 11:52:24.223 PM Listing hits OK 17
+DEBUG 11:52:24.923 PM Listing hits 22
+DEBUG 11:52:25.336 PM Listing Rules 1
+DEBUG 11:52:42.929 PM Rule insert/update @rule_servicesMBL1234!
+DEBUG 11:52:43.215 PM Listing Rules 2
+DEBUG 11:53:10.038 PM Get Rule @rule_servicesMBL1234
+DEBUG 11:53:23.675 PM Rule @rule_servicesMBL1234 deleted!
+DEBUG 11:53:24.282 PM Listing Rules 1

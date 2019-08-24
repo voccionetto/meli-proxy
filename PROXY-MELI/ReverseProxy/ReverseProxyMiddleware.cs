@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Newtonsoft.Json;
@@ -22,17 +23,20 @@ namespace PROXY_MELI.ReverseProxy
         private readonly IDistributedCache _redisCache;
         private readonly IMongoDatabase _database;
         private Stopwatch stopwatch;
+        private readonly ILogger<ReverseProxyMiddleware> _logger;
+
 
         public ReverseProxyMiddleware(RequestDelegate next,
             IOptions<ProxyMeliMongoDatabaseSettings> settings,
             IDistributedCache redisCache,
-            HttpClient httpClient
+            HttpClient httpClient, ILogger<ReverseProxyMiddleware> logger
            )
         {
             _next = next;
             _proxyMeliMongoDatabaseSettings = settings.Value;
             _redisCache = redisCache;
             _httpClient = httpClient;
+            _logger = logger;
 
             var clientMongo = new MongoClient(_proxyMeliMongoDatabaseSettings.ConnectionString);
             _database = clientMongo.GetDatabase(_proxyMeliMongoDatabaseSettings.DataBaseName);
@@ -40,10 +44,15 @@ namespace PROXY_MELI.ReverseProxy
 
         public async Task Invoke(HttpContext context)
         {
+            var request = context.Request;
+            var value = request.Path.Value.Split('/');
+            var path = string.Concat('/', value[value.Count() > 1 ? 1 : 0]);
+            var ip = !request.IpIsLocal() ? request.GetClientSystemInfo().IpAddress : "";
+            var requestId = request.Headers.FirstOrDefault(x => x.Key.Equals("Request-Id")).Value.ToString();
+
             try
             {
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
-
                 var targetUri = BuildTargetUri(context.Request);
 
                 if (targetUri != null)
@@ -51,9 +60,9 @@ namespace PROXY_MELI.ReverseProxy
                     stopwatch = new Stopwatch();
                     stopwatch.Start();
 
-                    var request = context.Request;
-                    var path = string.Concat('/', request.Path.Value.Split('/')[1]);
-                    var ip = !request.IpIsLocal() ? request.GetClientSystemInfo().IpAddress : "";
+
+                    _logger.LogDebug(
+                       $"Initiating request for {path} with RequestId : { requestId }");
 
                     if (!await CanPass(ip, path))
                     {
@@ -74,12 +83,17 @@ namespace PROXY_MELI.ReverseProxy
                         await ProcessResponseContent(context, responseMessage);
                     }
 
+                    _logger.LogDebug(
+                       $"Ending request for {path} with RequestId : { requestId }");
+
                     return;
                 }
 
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Error performing request for {path} with RequestId : {requestId}", ex);
+
                 await LogError(ex.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
@@ -118,6 +132,9 @@ namespace PROXY_MELI.ReverseProxy
                 var ttl = new DistributedCacheEntryOptions();
                 if (rule.BlockedTime > 0)
                 {
+                    _logger.LogDebug(
+                       $"Including key {rule.KeyRateLimitRedis} with ttl {rule.BlockedTime}");
+
                     ttl.SetAbsoluteExpiration(TimeSpan.FromSeconds(rule.BlockedTime));
                 }
                 await _redisCache.SetStringAsync(rule.KeyRateLimitRedis, "-1", ttl).ConfigureAwait(false);

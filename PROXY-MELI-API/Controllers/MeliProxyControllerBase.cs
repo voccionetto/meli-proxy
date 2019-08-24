@@ -14,6 +14,7 @@ using StackExchange.Redis;
 
 namespace PROXY_MELI_API.Controllers
 {
+    [Produces("application/json")]
     public class MeliProxyControllerBase : ControllerBase
     {
         protected readonly IProxyMeliMongoDatabaseSettings _proxyMeliMongoDatabaseSettings;

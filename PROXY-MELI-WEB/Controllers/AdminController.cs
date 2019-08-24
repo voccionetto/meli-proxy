@@ -69,5 +69,20 @@ namespace PROXY_MELI_WEB.Controllers
 
             return Json(ok);
         }
+
+        public JsonResult DeleteRule(string id)
+        {
+            var ok = true;
+            try
+            {
+                CallDelete("adminControl/" + id);
+            }
+            catch (Exception ex)
+            {
+                ok = false;
+            }
+
+            return Json(ok);
+        }
     }
 }

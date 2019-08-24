@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.Net.Http.Headers;
@@ -30,12 +31,16 @@ namespace Tests
         private RequestDelegate _requestDelegate;
         private IOptions<ProxyMeliMongoDatabaseSettings> _proxyMeliMongoDatabaseSettings;
         private IDistributedCache _redisCache;
+        private ILogger<ReverseProxyMiddleware> _logger;
+
 
         [SetUp]
         public void Setup()
         {
             _requestDelegate = Substitute.For<RequestDelegate>();
             _redisCache = Substitute.For<IDistributedCache>();
+            _logger = Substitute.For<ILogger<ReverseProxyMiddleware>>();
+
 
             _proxyMeliMongoDatabaseSettings = Options.Create(new ProxyMeliMongoDatabaseSettings
             {
@@ -164,6 +169,6 @@ namespace Tests
         }
 
         private ReverseProxyMiddleware CreateSut(HttpStatusCode expectedStatusCode, string expectedContent)
-            => new ReverseProxyMiddleware(_requestDelegate, _proxyMeliMongoDatabaseSettings, _redisCache, new HttpClient(new FakeDelegatingHandler(expectedStatusCode, expectedContent)));
+            => new ReverseProxyMiddleware(_requestDelegate, _proxyMeliMongoDatabaseSettings, _redisCache, new HttpClient(new FakeDelegatingHandler(expectedStatusCode, expectedContent)), _logger);
     }
 }

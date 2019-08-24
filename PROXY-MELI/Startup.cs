@@ -10,7 +10,6 @@ namespace PROXY_MELI
     using System.Net.Http;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using MongoDB.Driver;
     using PROXY_MELI_DATABASE.Mongo;
     using ReverseProxy;
 
@@ -69,7 +68,7 @@ namespace PROXY_MELI
                 app.UseDeveloperExceptionPage();
             }
 
-            //loggerFactory.AddLog4Net($"log4net.{env.EnvironmentName}.config");
+            loggerFactory.AddLog4Net($"log4net.{env.EnvironmentName}.config");
 
             app.UseMiddleware<ReverseProxyMiddleware>();
 

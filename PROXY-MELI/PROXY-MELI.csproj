@@ -30,9 +30,11 @@
     </Folder>
   </ItemGroup>
   <ItemGroup>
-    <Content Remove="log4net.Development.config" />
+    <ProjectReference Include="..\PROXY-MELI-DATABASE\PROXY-MELI-DATABASE.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PROXY-MELI-DATABASE\PROXY-MELI-DATABASE.csproj" />
+    <Content Update="log4net.Development.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>

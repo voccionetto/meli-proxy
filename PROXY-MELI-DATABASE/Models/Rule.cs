@@ -17,12 +17,12 @@ namespace PROXY_MELI_DATABASE.Models
             get
             {
                 if (!string.IsNullOrEmpty(Ip) && !string.IsNullOrEmpty(Path))
-                    return PrefixKeyNameRedis + Ip + Path;
+                    return PrefixKeyNameRedis + Ip + Path.Replace("/", "");
 
                 if (!string.IsNullOrEmpty(Ip))
                     return PrefixKeyNameRedis + Ip;
 
-                return PrefixKeyNameRedis + Path;
+                return PrefixKeyNameRedis + Path.Replace("/", "");
             }
         }
 

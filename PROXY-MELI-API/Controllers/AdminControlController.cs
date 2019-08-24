@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_DATABASE.Mongo;
@@ -17,12 +18,15 @@ namespace PROXY_MELI_API.Controllers
     [ApiController]
     public class AdminControlController : MeliProxyControllerBase
     {
+        private readonly ILogger<AdminControlController> _logger;
+
         public AdminControlController(
             IOptions<ProxyMeliMongoDatabaseSettings> settings,
             IDistributedCache redisCache,
-            IConnectionMultiplexer _connectionMultiplexer
+            IConnectionMultiplexer _connectionMultiplexer, ILogger<AdminControlController> logger
            ) : base(settings, redisCache, _connectionMultiplexer)
         {
+            _logger = logger;
         }
 
         [HttpGet("AllRules")]
@@ -31,9 +35,10 @@ namespace PROXY_MELI_API.Controllers
         public async Task<IActionResult> GetAllRulesAsync()
         {
             var keys = GetRulesAllKeysRedis();
+            _logger.LogDebug($"Listing Rules {keys.Count}");
 
             var responseKeys = new List<Rule>();
-            foreach(var key in keys)
+            foreach (var key in keys)
             {
                 responseKeys.Add(await GetCacheRuleRedis(key).ConfigureAwait(false));
             }
@@ -47,6 +52,15 @@ namespace PROXY_MELI_API.Controllers
         public async Task<IActionResult> GetAsync(string id)
         {
             var _key = await GetCacheRuleRedis(id).ConfigureAwait(false);
+            if (_key != null)
+            {
+                _logger.LogDebug($"Get Rule {_key.KeyRuleRedis}");
+            }
+            else
+            {
+                _logger.LogDebug($"Get Rule {id} not found");
+            }
+
             return Created("", _key);
         }
 
@@ -59,6 +73,9 @@ namespace PROXY_MELI_API.Controllers
             if (newRule != null)
             {
                 await SetCacheRuleRedis(newRule).ConfigureAwait(false);
+
+                _logger.LogDebug($"Rule insert/update {newRule.KeyRuleRedis}!");
+
             }
             return Ok(newRule);
         }
@@ -67,7 +84,7 @@ namespace PROXY_MELI_API.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> PutAsync(string id, [FromBody] Rule newRule)
         {
-            if (newRule != null && !string.IsNullOrEmpty(id)  && await GetCacheRuleRedis(id).ConfigureAwait(false) != null)
+            if (newRule != null && !string.IsNullOrEmpty(id) && await GetCacheRuleRedis(id).ConfigureAwait(false) != null)
             {
                 await SetCacheRuleRedis(newRule).ConfigureAwait(false);
             }
@@ -81,7 +98,9 @@ namespace PROXY_MELI_API.Controllers
         public async Task<ActionResult> DeleteAsync(string id)
         {
             await DeleteCacheRuleRedis(id).ConfigureAwait(false);
-            return Ok(id);
+            _logger.LogDebug($"Rule {id} deleted!");
+
+            return Ok(true);
         }
     }
 }

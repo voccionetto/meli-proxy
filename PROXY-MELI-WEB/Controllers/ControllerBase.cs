@@ -53,5 +53,24 @@ namespace PROXY_MELI_WEB.Controllers
             }
         }
 
+        protected HttpResponseMessage CallDelete(string path)
+        {
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var url = _api.ApiPath + path;
+
+                HttpResponseMessage response = client.DeleteAsync(url).Result;
+
+                string content =
+                    response.Content.ReadAsStringAsync().Result;
+                dynamic json = JsonConvert.DeserializeObject(content);
+                return json != null ? json.ToObject<bool>() : null;
+            }
+        }
+
     }
 }

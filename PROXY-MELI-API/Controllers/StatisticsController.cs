@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using PROXY_MELI_DATABASE.Models;
@@ -18,12 +19,16 @@ namespace PROXY_MELI_API.Controllers
     [ApiController]
     public class StatisticsController : MeliProxyControllerBase
     {
+        private readonly ILogger<StatisticsController> _logger;
+
         public StatisticsController(
             IOptions<ProxyMeliMongoDatabaseSettings> settings,
             IDistributedCache redisCache,
-            IConnectionMultiplexer _connectionMultiplexer
+            IConnectionMultiplexer _connectionMultiplexer,
+            ILogger<StatisticsController> logger
            ) : base(settings, redisCache, _connectionMultiplexer)
         {
+            _logger = logger;
         }
 
         private CreatedResult CreateResult(IList<RequestMELI> requests)
@@ -52,6 +57,8 @@ namespace PROXY_MELI_API.Controllers
             var _max = _date.TimeMax();
 
             var hits = await requests.Find(r=> r.Date >= _min && r.Date <= _max).ToListAsync();
+            _logger.LogDebug($"Listing hits {hits.Count()}");
+
             return CreateResult(hits);
         }
 
@@ -69,6 +76,9 @@ namespace PROXY_MELI_API.Controllers
             var _max = _date.TimeMax();
 
             var hits = await requests.Find(r=> r.Date >= _min && r.Date <= _max && r.StatusCode == 200).ToListAsync();
+
+            _logger.LogDebug($"Listing hits OK {hits.Count()}");
+
             return CreateResult(hits);
         }
 
@@ -86,6 +96,9 @@ namespace PROXY_MELI_API.Controllers
             var _max = _date.TimeMax();
 
             var hits = await requests.Find(r => r.Date >= _min && r.Date <= _max && r.StatusCode == 429).ToListAsync();
+
+            _logger.LogDebug($"Listing hits too Many Requestes {hits.Count()}");
+
             return CreateResult(hits);
         }
 
@@ -103,6 +116,9 @@ namespace PROXY_MELI_API.Controllers
             var _max = _date.TimeMax();
 
             var hits = await requests.Find(r => r.Date >= _min && r.Date <= _max && r.StatusCode == 404).ToListAsync();
+
+            _logger.LogDebug($"Listing hits with error not found {hits.Count()}");
+
             return CreateResult(hits);
         }
 
@@ -120,6 +136,9 @@ namespace PROXY_MELI_API.Controllers
             var _max = _date.TimeMax();
 
             var hits = await requests.Find(r => r.Date >= _min && r.Date <= _max && r.StatusCode == 500).ToListAsync();
+
+            _logger.LogDebug($"Listing hits with errors {hits.Count()}");
+
             return CreateResult(hits);
         }
     }
