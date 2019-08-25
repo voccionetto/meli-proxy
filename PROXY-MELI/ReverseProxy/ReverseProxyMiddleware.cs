@@ -92,7 +92,7 @@ namespace PROXY_MELI.ReverseProxy
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error performing request for {path} with RequestId : {requestId}", ex);
+                _logger.LogError($"Error performing request for {path} with RequestId : {requestId} msg error: {ex.Message}");
 
                 await LogError(ex.Message);
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

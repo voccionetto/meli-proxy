@@ -214,3 +214,27 @@ DEBUG 11:52:43.215 PM Listing Rules 2
 DEBUG 11:53:10.038 PM Get Rule @rule_servicesMBL1234
 DEBUG 11:53:23.675 PM Rule @rule_servicesMBL1234 deleted!
 DEBUG 11:53:24.282 PM Listing Rules 1
+DEBUG 12:44:10.543 AM Listing hits OK 1
+DEBUG 12:44:10.543 AM Listing hits too Many Requestes 0
+DEBUG 12:44:10.543 AM Listing hits with error not found 0
+DEBUG 12:44:10.543 AM Listing hits 1
+DEBUG 12:44:10.543 AM Listing hits 1
+DEBUG 12:44:10.598 AM Listing hits with errors 0
+DEBUG 12:44:11.274 AM Listing hits 1
+DEBUG 12:44:11.601 AM Listing Rules 0
+DEBUG 12:44:19.613 AM Rule insert/update @rule_categoriesMLB1430!
+DEBUG 12:44:19.890 AM Listing Rules 1
+DEBUG 12:47:22.995 AM Listing hits 4
+DEBUG 12:47:22.995 AM Listing hits OK 4
+DEBUG 12:47:22.995 AM Listing hits with errors 0
+DEBUG 12:47:22.995 AM Listing hits with error not found 0
+DEBUG 12:47:23.045 AM Listing hits too Many Requestes 0
+DEBUG 12:47:23.079 AM Listing hits 4
+DEBUG 12:47:23.618 AM Listing hits 4
+DEBUG 12:47:23.938 AM Listing Rules 1
+DEBUG 12:47:25.779 AM Get Rule @rule_categoriesMLB1430
+DEBUG 12:47:29.127 AM Rule insert/update @rule_categories!
+DEBUG 12:47:29.434 AM Listing Rules 2
+DEBUG 12:47:31.681 AM Get Rule @rule_categoriesMLB1430
+DEBUG 12:47:32.926 AM Rule @rule_categoriesMLB1430 deleted!
+DEBUG 12:47:33.782 AM Listing Rules 1
