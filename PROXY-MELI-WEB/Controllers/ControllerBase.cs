@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -23,6 +22,8 @@ namespace PROXY_MELI_WEB.Controllers
         {
             using (var client = new HttpClient())
             {
+                client.BaseAddress = new Uri($"{this.Request.Scheme}://{this.Request.Host}");
+
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));
@@ -43,6 +44,8 @@ namespace PROXY_MELI_WEB.Controllers
         {
             using (var httpClient = new HttpClient())
             {
+                httpClient.BaseAddress = new Uri($"{this.Request.Scheme}://{this.Request.Host}");
+
                 var parametros = JsonConvert.SerializeObject(data);
                 var content = new StringContent(parametros, System.Text.Encoding.UTF8, "application/json");
 
@@ -57,6 +60,8 @@ namespace PROXY_MELI_WEB.Controllers
         {
             using (var client = new HttpClient())
             {
+                client.BaseAddress = new Uri($"{this.Request.Scheme}://{this.Request.Host}");
+
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(
                     new MediaTypeWithQualityHeaderValue("application/json"));

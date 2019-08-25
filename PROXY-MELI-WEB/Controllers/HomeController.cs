@@ -1,25 +1,22 @@
 ﻿using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_WEB.Models;
-using System.Net;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace PROXY_MELI_WEB.Controllers
 {
     public class HomeController : ControllerBase
     {
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IOptions<ApiCaller> api)
+        public HomeController(IOptions<ApiCaller> api, ILogger<HomeController> logger)
             : base(api)
         {
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -29,17 +26,27 @@ namespace PROXY_MELI_WEB.Controllers
 
         private IEnumerable<int> OrderHits(IList<HitResponse> hits)
         {
-            return hits.OrderBy(g => g.Date).GroupBy(g => g.Date.Hour).Select(g => g.ToList().Count());
+            var hitsReturn = new List<int>();
+            var hitsOrder = hits.OrderBy(g => g.Date);
+
+            for (var i = 0; i < 24; i++)
+            {
+                var hitsSelect = hitsOrder.Where(h => h.Date.Hour == i);
+                hitsReturn.Add(hitsSelect.Count());
+            }
+            return hitsReturn;
         }
 
         private IEnumerable<double> CalculateAverageTime(IList<HitResponse> hits)
         {
             var responses = new List<double>();
-            var hitsOrdered = hits.OrderBy(g => g.Date).GroupBy(g => g.Date.Hour);
-            foreach (var hit in hitsOrdered)
+            var hitsOrder = hits.OrderBy(g => g.Date);
+
+            for (var i = 0; i < 24; i++)
             {
-                var list = hit.ToList().Select(h => h.TotalTime.TotalMilliseconds);
-                var average = list.Average();
+                var hitsSelect = hitsOrder.Where(h => h.Date.Hour == i);
+                var list = hitsSelect.Select(h => h.TotalTime.TotalMilliseconds);
+                var average = list.Count() > 0 ? list.Average() : 0;
                 responses.Add(average);
             }
 
@@ -51,12 +58,14 @@ namespace PROXY_MELI_WEB.Controllers
             var hits = new List<HitResponse>();
             try
             {
+                _logger.LogDebug($"get all hits");
+
                 var allHits = CallGet<IList<HitResponse>>("statistics/AllHits");
-                hits = allHits.OrderBy(h => h.Ip).ThenBy(h=> h.Path).ToList();
+                hits = allHits.OrderBy(h => h.Ip).ThenBy(h => h.Path).ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                //TODO: logar
+                _logger.LogError($"error get all hits {ex.Message}");
             }
             return Json(hits);
         }

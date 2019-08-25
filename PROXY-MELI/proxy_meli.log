@@ -71,3 +71,9 @@ DEBUG 12:48:35.920 AM Initiating request for /categories with RequestId :
 DEBUG 12:48:35.931 AM Including key @rateLimit_@rule_categories with ttl 120
 DEBUG 12:48:36.212 AM Ending request for /categories with RequestId : 
 DEBUG 12:48:36.817 AM Initiating request for /categories with RequestId : 
+DEBUG 04:14:04.576 AM Initiating request for /categories with RequestId : 
+ERROR 04:14:05.565 AM Error performing request for /categories with RequestId :  msg error: No connection is available to service this operation: EVAL; SocketFailure on localhost:6379/Subscription, origin: Error, input-buffer: 0, outstanding: 0, last-read: 0s ago, last-write: 0s ago, unanswered-write: 25439s ago, keep-alive: 60s, pending: 0, state: Connecting, last-heartbeat: never, last-mbeat: -1s ago, global: 0s ago
+DEBUG 04:22:06.952 AM Initiating request for /categories with RequestId : 
+ERROR 04:22:08.069 AM Error performing request for /categories with RequestId :  msg error: No connection is available to service this operation: EVAL; SocketFailure on localhost:6379/Subscription, origin: Error, input-buffer: 0, outstanding: 0, last-read: 0s ago, last-write: 0s ago, unanswered-write: 25921s ago, keep-alive: 60s, pending: 0, state: Connecting, last-heartbeat: never, last-mbeat: -1s ago, global: 0s ago
+DEBUG 04:22:44.905 AM Initiating request for /categories with RequestId : 
+ERROR 04:22:54.929 AM Error performing request for /categories with RequestId :  msg error: No connection is available to service this operation: EVAL; SocketFailure on localhost:6379/Subscription, origin: Error, input-buffer: 0, outstanding: 0, last-read: 0s ago, last-write: 0s ago, unanswered-write: 25921s ago, keep-alive: 60s, pending: 0, state: Connecting, last-heartbeat: never, last-mbeat: -1s ago, global: 0s ago

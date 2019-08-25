@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using PROXY_MELI_DATABASE.Models;
 using PROXY_MELI_WEB.Models;
-using System.Net;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace PROXY_MELI_WEB.Controllers
 {
     public class AdminController : ControllerBase
     {
+        private readonly ILogger<AdminController> _logger;
 
-        public AdminController(IOptions<ApiCaller> api)
+        public AdminController(IOptions<ApiCaller> api, ILogger<AdminController> logger)
             : base(api)
         {
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -32,11 +28,12 @@ namespace PROXY_MELI_WEB.Controllers
             IList<Rule> rules = new List<Rule>();
             try
             {
+                _logger.LogDebug("get all rules ");
                 rules = CallGet<IList<Rule>>("adminControl/allrules");
             }
             catch(Exception ex)
             {
-                //TODO: logar
+                _logger.LogError($"error get all rules {ex.Message}");
             }
             return Json(rules);
         }
@@ -50,7 +47,7 @@ namespace PROXY_MELI_WEB.Controllers
             }
             catch (Exception ex)
             {
-                //TODO: logar
+                _logger.LogError($"error get rule {ex.Message}");
             }
             return Json(rule);
         }
@@ -65,6 +62,7 @@ namespace PROXY_MELI_WEB.Controllers
             catch(Exception ex)
             {
                 ok = false;
+                _logger.LogError($"error SaveUpdate key {ex.Message}");
             }
 
             return Json(ok);
@@ -79,6 +77,8 @@ namespace PROXY_MELI_WEB.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError($"error delete rule {ex.Message}");
+
                 ok = false;
             }
 
