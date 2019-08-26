@@ -238,3 +238,7 @@ DEBUG 12:47:29.434 AM Listing Rules 2
 DEBUG 12:47:31.681 AM Get Rule @rule_categoriesMLB1430
 DEBUG 12:47:32.926 AM Rule @rule_categoriesMLB1430 deleted!
 DEBUG 12:47:33.782 AM Listing Rules 1
+ERROR 08:47:02.573 PM Error deleting rule @rule_categories error Error converting value -1 to type 'PROXY_MELI_DATABASE.Models.Rule'. Path '', line 1, position 2.
+ERROR 08:50:24.255 PM Error deleting rule @rule_categories error Error converting value -1 to type 'PROXY_MELI_DATABASE.Models.Rule'. Path '', line 1, position 2.
+DEBUG 09:00:15.602 PM Key Rate Limit @rateLimit_@rule_categories deleted!
+DEBUG 09:00:21.239 PM Rule @rule_categories deleted!

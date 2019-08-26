@@ -1,5 +1,6 @@
 ﻿using System;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace PROXY_MELI_DATABASE.Models
 {
@@ -11,6 +12,8 @@ namespace PROXY_MELI_DATABASE.Models
         public int StatusCode { get; set; }
         public string Ip { get; set; }
         public string Path { get; set; }
+
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime Date { get; set; }
     }
 }

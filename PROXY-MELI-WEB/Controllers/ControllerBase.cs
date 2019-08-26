@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using PROXY_MELI_WEB.Models;
@@ -11,9 +12,11 @@ namespace PROXY_MELI_WEB.Controllers
     public class ControllerBase : Controller
     {
         protected readonly ApiCaller _api;
+        private readonly ILogger<ControllerBase> _logger;
 
-        public ControllerBase(IOptions<ApiCaller> api)
+        public ControllerBase(IOptions<ApiCaller> api, ILogger<ControllerBase> logger)
         {
+            _logger = logger;
             _api = api.Value;
         }
 
@@ -29,6 +32,8 @@ namespace PROXY_MELI_WEB.Controllers
                     new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var url = _api.ApiPath + path;
+
+                _logger.LogDebug($"executing get {url}");
 
                 HttpResponseMessage response = client.GetAsync(url).Result;
 
@@ -50,6 +55,7 @@ namespace PROXY_MELI_WEB.Controllers
                 var content = new StringContent(parametros, System.Text.Encoding.UTF8, "application/json");
 
                 var url = _api.ApiPath + path;
+                _logger.LogDebug($"executing post {url}");
 
                 var result = httpClient.PostAsync(url, content).Result;
                 return result;
@@ -67,6 +73,7 @@ namespace PROXY_MELI_WEB.Controllers
                     new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var url = _api.ApiPath + path;
+                _logger.LogDebug($"executing delete {url}");
 
                 HttpResponseMessage response = client.DeleteAsync(url).Result;
 

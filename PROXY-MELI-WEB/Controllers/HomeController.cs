@@ -14,7 +14,7 @@ namespace PROXY_MELI_WEB.Controllers
         private readonly ILogger<HomeController> _logger;
 
         public HomeController(IOptions<ApiCaller> api, ILogger<HomeController> logger)
-            : base(api)
+            : base(api, logger)
         {
             _logger = logger;
         }

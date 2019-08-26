@@ -127,7 +127,7 @@ namespace PROXY_MELI.ReverseProxy
             qtd++;
             await _redisCache.SetStringAsync(rule.KeyRateLimitRedis, qtd.ToString()).ConfigureAwait(false);
 
-            if (qtd == rule.RateLimit)
+            if (qtd >= rule.RateLimit)
             {
                 var ttl = new DistributedCacheEntryOptions();
                 if (rule.BlockedTime > 0)
@@ -161,6 +161,7 @@ namespace PROXY_MELI.ReverseProxy
 
             var requests = _database.GetCollection<RequestMELI>(_proxyMeliMongoDatabaseSettings.RequestsCollectionName);
 
+            _logger.LogDebug($"logging {path} at {DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss")}");
             await requests.InsertOneAsync(new RequestMELI
             {
                 TotalTime = stopwatch.Elapsed,

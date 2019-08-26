@@ -13,7 +13,7 @@ namespace PROXY_MELI_WEB.Controllers
         private readonly ILogger<AdminController> _logger;
 
         public AdminController(IOptions<ApiCaller> api, ILogger<AdminController> logger)
-            : base(api)
+            : base(api, logger)
         {
             _logger = logger;
         }

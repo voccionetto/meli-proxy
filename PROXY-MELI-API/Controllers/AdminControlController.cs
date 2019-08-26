@@ -97,10 +97,30 @@ namespace PROXY_MELI_API.Controllers
         [ProducesResponseType(500)]
         public async Task<ActionResult> DeleteAsync(string id)
         {
-            await DeleteCacheRuleRedis(id).ConfigureAwait(false);
-            _logger.LogDebug($"Rule {id} deleted!");
+            try
+            {
+                var rule = await GetCacheRuleRedis(id).ConfigureAwait(false);
+                if (rule != null)
+                {
+                    var keyRuleLimit = rule.KeyRateLimitRedis;
 
-            return Ok(true);
+                    var keyRateLimit = await GetStringCacheRedis(keyRuleLimit).ConfigureAwait(false);
+                    if (!string.IsNullOrEmpty(keyRateLimit))
+                    {
+                        await DeleteCacheRuleRedis(keyRuleLimit).ConfigureAwait(false);
+                        _logger.LogDebug($"Key Rate Limit {rule.KeyRateLimitRedis} deleted!");
+                    }
+                    await DeleteCacheRuleRedis(id).ConfigureAwait(false);
+                    _logger.LogDebug($"Rule {id} deleted!");
+                }
+
+                return Ok(true);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting rule {id} error {ex.Message}");
+                return Ok(false);
+            }
         }
     }
 }

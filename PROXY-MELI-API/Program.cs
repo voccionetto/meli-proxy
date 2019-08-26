@@ -19,7 +19,8 @@ namespace PROXY_MELI_API
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            //.UseUrls("http://*:4321")
+        //.UseUrls("http://*:4321")
+            .UseIISIntegration()
             .UseStartup<Startup>();
     }
 }
