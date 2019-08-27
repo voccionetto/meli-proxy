@@ -61,7 +61,7 @@ namespace PROXY_MELI_WEB.Controllers
                 _logger.LogDebug($"get all hits");
 
                 var allHits = CallGet<IList<HitResponse>>("statistics/AllHits");
-                hits = allHits.OrderBy(h => h.Ip).ThenBy(h => h.Path).ToList();
+                hits = allHits.OrderBy(h => h.Date).ThenBy(h => h.Path).ThenBy(h => h.Ip).ToList();
             }
             catch (Exception ex)
             {
